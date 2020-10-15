@@ -1,27 +1,49 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
-function RenderLeader({ leader }) {
+function RenderLeader({ leader, isLoading }) {
+	if (isLoading) {
+		return (
+			<div className="container">
+				<div className="row">
+					<Loading />
+				</div>
+			</div>
+		);
+	} else if (props.errMess) {
+		return (
+			<div className="container">
+				<div className="row">
+					<h4>{props.errMess}</h4>
+				</div>
+			</div>
+		);
+	} else
 	return (
-		<Media>
-			<img className="align-self-start mr-3" width={64} height={64} src={leader.image} alt={leader.name} />
-			<Media body>
-				<Media heading>
-					<h5>{leader.name}</h5>
+		<Stagger in>
+			<Media>
+				<img className="align-self-start mr-3" width={64} height={64} src={baseUrl + leader.image} alt={leader.name} />
+				<Media body>
+					<Media heading>
+						<h5>{leader.name}</h5>
+					</Media>
+					<p>{leader.designation}</p>
+					<p>{leader.description}</p>
 				</Media>
-				<p>{leader.designation}</p>
-				<p>{leader.description}</p>
 			</Media>
-		</Media>
+		</Stagger>
 	);
 }
 
 const About = (props) => {
 	const leaders = props.leaders.map((leader) => {
 		return (
-			<div>
-				<RenderLeader leader={leader} />
+			<div key={leader.id}>
+				<RenderLeader leader={leader} isLoading={this.props.isLoading}/>
 			</div>
 		);
 	});
