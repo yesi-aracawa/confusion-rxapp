@@ -5,8 +5,43 @@ import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
 import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
-function RenderLeader({ leader, isLoading }) {
-	if (isLoading) {
+function RenderLeader({ leader }) {
+	return (
+    <FadeTransform in transformProps={{exitTransform: 'scale(0.5) translateY(-50%)'}}>
+      <Media>
+        <img className="align-self-start mr-3" width={64} height={64} src={baseUrl + leader.image} alt={leader.name} />
+        <Media body>
+          <Media heading>
+            <h5>{leader.name}</h5>
+          </Media>
+          <p>{leader.designation}</p>
+          <p>{leader.description}</p>
+        </Media>
+      </Media>
+    </FadeTransform>
+	);
+}
+
+const About = (props) => {
+  {console.log("isLoading0: " + props.leaderLoading)}
+	const leaders = props.leaders.map((leader) => {
+		return(
+			<div key={leader.id}>
+				<Stagger in>
+					{props.leaders.map((leader) => {
+					return (
+            <Fade in>
+						<div key={leader.id}>
+							<RenderLeader leader={leader}/>
+						</div>
+            </Fade>
+					);
+				})}
+				</Stagger>
+			</div>
+		);
+	});
+  if (props.leaderLoading) {
 		return (
 			<div className="container">
 				<div className="row">
@@ -14,7 +49,7 @@ function RenderLeader({ leader, isLoading }) {
 				</div>
 			</div>
 		);
-	} else if (props.errMess) {
+	} else if (props.leaderErrMess) {
 		return (
 			<div className="container">
 				<div className="row">
@@ -23,31 +58,6 @@ function RenderLeader({ leader, isLoading }) {
 			</div>
 		);
 	} else
-	return (
-		<Stagger in>
-			<Media>
-				<img className="align-self-start mr-3" width={64} height={64} src={baseUrl + leader.image} alt={leader.name} />
-				<Media body>
-					<Media heading>
-						<h5>{leader.name}</h5>
-					</Media>
-					<p>{leader.designation}</p>
-					<p>{leader.description}</p>
-				</Media>
-			</Media>
-		</Stagger>
-	);
-}
-
-const About = (props) => {
-	const leaders = props.leaders.map((leader) => {
-		return (
-			<div key={leader.id}>
-				<RenderLeader leader={leader} isLoading={this.props.isLoading}/>
-			</div>
-		);
-	});
-
 	return (
 		<div className="container">
 			<div className="row">
@@ -118,6 +128,7 @@ const About = (props) => {
 					<h2>Corporate Leadership</h2>
 				</div>
 				<div className="col-12">
+          {console.log("loading IN: " + props.leaderLoading)}
 					<Media list>{leaders}</Media>
 				</div>
 			</div>

@@ -77,8 +77,8 @@ class Main extends Component {
 			return (
         <About 
           leaders={this.props.leaders.leaders}
-          isLoading={this.props.leaders.isLoading}
-          errMess={this.props.leaders.errMess}
+          leaderLoading={this.props.leaders.isLoading}
+          leaderErrMess={this.props.leaders.errMess}
         />
 			);
     };
