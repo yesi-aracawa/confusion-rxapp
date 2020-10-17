@@ -145,34 +145,29 @@ function RenderDish({ dish }) {
 }
 
 function RenderComments({comments, postComment, dishId}) {
-	const comnts = comments.map((comment) => {
-		return (
-			<div key={comment.id}>
-				<ul className="list-unstyled">
+  if (comments != null){   
+    return (
+        <div>
+        <h4>Comments</h4>
+        <ul className="list-unstyled">
         <Stagger in>
-          {comments.map((comment) => {
+        {comments.map((comment) => {
             return (
-              <Fade in>
+                <Fade in>
                 <li key={comment.id}>
                 <p>{comment.comment}</p>
                 <p>-- {comment.author} , {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</p>
                 </li>
-              </Fade>
+                </Fade>
             );
-          })}
+        })}
         </Stagger>
-				</ul>
-			</div>
-		);
-	});
-	if (comments != null)
-		return (
-			<div>
-				<h4>Comments</h4>
-				{comnts}
-				<CommentForm dishId={dishId} postComment={postComment} />
-			</div>
-		);
+
+        </ul>
+        <CommentForm dishId={dishId} postComment={postComment} />
+        </div>
+        );
+    }
 	else return <div>Estoy solo :c</div>;
 }
 

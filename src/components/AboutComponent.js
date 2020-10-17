@@ -23,7 +23,6 @@ function RenderLeader({ leader }) {
 }
 
 const About = (props) => {
-  {console.log("isLoading0: " + props.leaderLoading)}
 	const leaders = props.leaders.map((leader) => {
 		return(
 			<div key={leader.id}>
@@ -128,7 +127,6 @@ const About = (props) => {
 					<h2>Corporate Leadership</h2>
 				</div>
 				<div className="col-12">
-          {console.log("loading IN: " + props.leaderLoading)}
 					<Media list>{leaders}</Media>
 				</div>
 			</div>
